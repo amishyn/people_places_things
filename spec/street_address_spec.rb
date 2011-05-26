@@ -1,6 +1,14 @@
 require 'spec/helper'
 
 describe StreetAddress do
+
+  it "should parse blank" do
+    addr = StreetAddress.new ""
+    addr.number.should == nil
+    addr.name.should == nil
+    addr.to_s.should == ""
+  end
+
   it "should parse number street" do
     addr = StreetAddress.new "123 Main Street"
     addr.number.should == '123'

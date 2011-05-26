@@ -112,7 +112,7 @@ module PeoplePlacesThings
     
     def sanitize_fields
       {
-        :name => lambda{|name| name.gsub(/\d+\/\d+/,'').gsub(/\s+/," ").strip}
+        :name => lambda{|name| name && name.gsub(/\d+\/\d+/,'').gsub(/\s+/," ").strip}
       }.each_pair do |field, sanitizer|
         self.send("#{field}=", sanitizer.call(self.send(field)))
       end
