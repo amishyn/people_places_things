@@ -8,6 +8,13 @@ describe StreetAddress do
     addr.suffix.should == :street
   end
   
+  it "should parse number street even with 1/2" do
+    addr = StreetAddress.new "123 1/2 Main Street"
+    addr.number.should == '123'
+    addr.name.should == 'Main'
+    addr.suffix.should == :street
+  end
+  
   it "should parse number with letter" do
     addr = StreetAddress.new "204-B Main Street"
     addr.number.should == '204-B'
@@ -89,6 +96,17 @@ describe StreetAddress do
   
   it "should parse numbers" do
     addr = StreetAddress.new '123 E E St NE # 5'
+    addr.number.should == '123'
+    addr.pre_direction.should == :east
+    addr.name.should == 'E'
+    addr.suffix.should == :street
+    addr.post_direction.should == :northeast
+    addr.unit_type.should == :number
+    addr.unit.should == '5'
+  end
+  
+  it "should parse numbers without spaces" do
+    addr = StreetAddress.new '123 E E St NE #5'
     addr.number.should == '123'
     addr.pre_direction.should == :east
     addr.name.should == 'E'

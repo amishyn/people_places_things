@@ -3,7 +3,10 @@ module PeoplePlacesThings
     attr_accessor :number, :pre_direction, :name, :suffix, :post_direction, :unit_type, :unit, :raw
   
     def initialize(str)
-      self.raw = str
+      self.raw = str.dup
+
+      str = StreetAddress.fix_string(str)
+
       tokens = str.split(/[\s,]/).select {|s| !s.empty?}
     
       # Check the first token for leading numericality.  If so, set number to the first token, and delete it
@@ -55,7 +58,8 @@ module PeoplePlacesThings
         self.name = post_direction_token
         self.post_direction = nil
       end
-    
+      
+      sanitize_fields
       validate_parts
     end
   
@@ -102,6 +106,18 @@ module PeoplePlacesThings
       nil
     end
   
+    def self.fix_string(str)
+      str.gsub(/\#(\d+)/){|match| "# #{$1}"}
+    end
+    
+    def sanitize_fields
+      {
+        :name => lambda{|name| name.gsub(/\d+\/\d+/,'').gsub(/\s+/," ").strip}
+      }.each_pair do |field, sanitizer|
+        self.send("#{field}=", sanitizer.call(self.send(field)))
+      end
+    end
+    
     DIRECTIONS = {
       :north => %w(north n n.),
       :northeast => %w(northeast ne ne. n.e.),
