@@ -107,7 +107,7 @@ module PeoplePlacesThings
     end
   
     def self.fix_string(str)
-      str.gsub(/\#(\d+)/){|match| "# #{$1}"}
+      str.gsub(/\#(\w+)/){|match| "# #{$1}"}
     end
     
     def sanitize_fields

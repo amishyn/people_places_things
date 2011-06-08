@@ -171,6 +171,15 @@ describe StreetAddress do
     addr.unit.should == '23'
   end
   
+  it 'should hadle numbers without space' do
+    addr = StreetAddress.new "845 Market St, #Fe6"
+    addr.number.should == '845'
+    addr.name.should == 'Market'
+    addr.suffix.should == :street
+    addr.unit_type.should == :number
+    addr.unit.should == 'Fe6'
+  end
+  
   it "should support long form" do
     StreetAddress.string_for(:northwest, :long).should == 'northwest'
   end
