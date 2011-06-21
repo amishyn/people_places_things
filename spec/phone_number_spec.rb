@@ -1,6 +1,12 @@
 require 'spec/helper'
 
 describe PhoneNumber do
+  
+  it "should raise error on wrong format" do
+    lambda { PhoneNumber.new '4045551' }.should raise_error(PeoplePlacesThings::PhoneNumber::UnsupportedFormat)
+  end
+  
+  
   it "should parse ten digits" do
     phone = PhoneNumber.new '4045551212'
     phone.area_code.should == '404'

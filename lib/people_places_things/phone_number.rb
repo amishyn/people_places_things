@@ -1,11 +1,12 @@
 module PeoplePlacesThings
   class PhoneNumber
+    class UnsupportedFormat < StandardError; end
     attr_accessor :country_code, :area_code, :number, :exchange, :suffix, :raw
   
     def initialize(str)
       self.raw = str
       extract = str.strip.match(/^([-+()\d ]+)$/)[0].gsub(/[^\d]/, '') rescue nil
-      raise "Unsupported Format" if !extract || extract.length < 10 || extract.length > 11
+      raise UnsupportedFormat if !extract || extract.length < 10 || extract.length > 11
 
       if extract.length == 11
         self.country_code = extract.slice!(0..0)
@@ -23,11 +24,11 @@ module PeoplePlacesThings
     
       self.suffix = extract
 
-      raise "Unsupported Format" if !self.exchange || !self.suffix
+      raise UnsupportedFormat if !self.exchange || !self.suffix
     end
   
     def to_s(fmt = :full_formatted)
-      raise "Unsupported Format" if !OUTPUT_FORMATS.include?(fmt)
+      raise UnsupportedFormat if !OUTPUT_FORMATS.include?(fmt)
 
       case fmt
         when :full_digits
