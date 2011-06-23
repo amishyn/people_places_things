@@ -1,6 +1,11 @@
 require 'spec/helper'
 
 describe State do
+  it "should raise error on wrong format" do
+    lambda { State.new '111' }.should raise_error(PeoplePlacesThings::State::UnsupportedFormat)
+  end
+  
+  
   it "should parse abbreviation" do
     state = State.new 'ga'
     state.sym.should == :ga

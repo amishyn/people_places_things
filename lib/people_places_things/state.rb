@@ -1,5 +1,7 @@
 module PeoplePlacesThings
   class State
+    class UnsupportedFormat < StandardError; end
+    
     attr_accessor :sym, :raw
   
     def initialize(str)
@@ -12,11 +14,11 @@ module PeoplePlacesThings
         self.sym = REVERSE[token]
       end
     
-      raise "Unsupported Format" if !self.sym
+      raise UnsupportedFormat if !self.sym
     end
   
     def to_s(fmt = :full)
-      raise "Unsupported Format" if !OUTPUT_FORMATS.include?(fmt)
+      raise UnsupportedFormat if !OUTPUT_FORMATS.include?(fmt)
       fmt == :full ? FORWARD[self.sym].capitalize : self.sym.to_s.upcase
     end
   
