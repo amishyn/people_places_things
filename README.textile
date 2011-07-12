@@ -27,7 +27,7 @@ h2. Using PeoplePlacesThings
   addr = StreetAddress.new("204-b ne. 1st ave suite 4")
   addr.number => "204-b"
   addr.pre_direction => :northeast
-  addr.name => "1st"
+  addr.name => "first"
   addr.suffix => :avenue
   addr.unit_type => :suite
   addr.unit => "4"
@@ -66,3 +66,21 @@ h2. Data source
 The data that makes up @lib/people_places_things/data/data.yml@ was generated from @lib/people_places_things/data/raw.txt@, which was downloaded from "the US Census website":http://www.census.gov/geo/www/ansi/download.html.
     
     
+
+h2. Fork Changes
+
+<pre>
+UnsupportedFormat error 
+
+Rewrite 1st => first
+<code>
+addr = StreetAddress.new("204-b ne. 1st ave suite 4")
+addr.number => "204-b"
+addr.pre_direction => :northeast
+addr.name => "first"
+addr.suffix => :avenue
+addr.unit_type => :suite
+addr.unit => "4"
+addr.to_s => "204-b northeast 1st avenue suite 4"
+</code>
+</pre>

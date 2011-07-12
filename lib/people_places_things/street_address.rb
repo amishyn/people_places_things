@@ -53,7 +53,7 @@ module PeoplePlacesThings
       # if any tokens remain, set joined remaining tokens as name, otherwise, set name to post_direction, if set, and set post_direction to nil
       #
       if tokens.size > 0
-        self.name = tokens.join(' ')
+        self.name = fix_ordinal_names(tokens).join(' ')
       else
         self.name = post_direction_token
         self.post_direction = nil
@@ -108,6 +108,12 @@ module PeoplePlacesThings
   
     def self.fix_string(str)
       str.gsub(/\#(\w+)/){|match| "# #{$1}"}
+    end
+    
+    def fix_ordinal_names(tokens)
+      tokens.map!{|t|
+        StreetAddress.find_token(t, ORDINALS)||t
+      }
     end
     
     def sanitize_fields
@@ -192,6 +198,28 @@ module PeoplePlacesThings
       :apartment => %w(apartment apt apt.)
     }
   
+    ORDINALS = {
+      :first => %w(1st),
+      :second => %w(2nd),
+      :third => %w(3rd),
+      :fourth => %w(4th),
+      :fifth => %w(5th),
+      :sixth => %w(6th),
+      :seventh => %w(7th),
+      :eighth => %w(8th),
+      :ninth => %w(9th),
+      :tenth => %w(10th),
+      :eleventh => %w(11th),
+      :twelveth => %(12th),
+      :thitneeth => %(13th),
+      :fourteenth => %(14th),
+      :fifteenth => %(15th),
+      :sixteenth => %(16th),
+      :seventeenth => %(17th),
+      :eighteenth => %(18th),
+      :nineteenth => %(19th),
+      :twentieth => %(20th),
+    }
     SUPPORTED_FORMS = [:long, :short]
   end
 end

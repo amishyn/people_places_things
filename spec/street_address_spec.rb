@@ -76,7 +76,7 @@ describe StreetAddress do
     addr = StreetAddress.new "123 e. 1st ave"
     addr.number.should == '123'
     addr.pre_direction.should == :east
-    addr.name.should == '1st'
+    addr.name.should == 'first'
     addr.suffix.should == :avenue
   end
   
@@ -194,5 +194,13 @@ describe StreetAddress do
   
   it "should save raw" do
     StreetAddress.new('123 Main st.').raw.should == '123 Main st.'
+  end
+  
+  it 'should process ordinal numbers' do
+    StreetAddress.new('747 3rd st.').to_s.should == "747 third street"
+  end
+
+  it 'should process ordinal numbers' do
+    StreetAddress.new('747 20th st.').to_s.should == "747 twentieth street"
   end
 end
