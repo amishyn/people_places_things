@@ -5,10 +5,10 @@
 
 Gem::Specification.new do |s|
   s.name = %q{people_places_things}
-  s.version = "2.4.1"
+  s.version = "2.4.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Danny Burkes"]
+  s.authors = ["Danny Burkes", 'Alex Mishyn']
   s.date = %q{2010-03-03}
   s.description = %q{Parsers and formatters for person names, street addresses, city/state/zip, phone numbers, etc.}
   s.email = %q{dburkes@netable.com}
