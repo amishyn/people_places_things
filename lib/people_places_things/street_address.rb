@@ -115,7 +115,7 @@ module PeoplePlacesThings
     def fix_ordinal_names(tokens)
       tokens.map do |t|
         if t.match(/(\d+)(st|th|nd|rd)/)
-          $1.to_i.ordinalize
+          $1.to_i.full_ordinalize
         else
           t
         end
