@@ -56,7 +56,7 @@ Gem::Specification.new do |s|
      "spec/street_address_spec.rb",
      "spec/zip_code_spec.rb"
   ]
-
+  s.add_dependence('ordinalize', '~> 0.0.3')
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3

@@ -1,3 +1,5 @@
+require 'ordinalize'
+
 module PeoplePlacesThings
   class StreetAddress
     attr_accessor :number, :pre_direction, :name, :suffix, :post_direction, :unit_type, :unit, :raw
@@ -111,9 +113,13 @@ module PeoplePlacesThings
     end
     
     def fix_ordinal_names(tokens)
-      tokens.map!{|t|
-        StreetAddress.find_token(t, ORDINALS)||t
-      }
+      tokens.map do |t|
+        if t.match(/(\d+)(st|th|nd|rd)/)
+          $1.to_i.ordinalize
+        else
+          t
+        end
+      end
     end
     
     def sanitize_fields
@@ -198,28 +204,6 @@ module PeoplePlacesThings
       :apartment => %w(apartment apt apt.)
     }
   
-    ORDINALS = {
-      :first => %w(1st),
-      :second => %w(2nd),
-      :third => %w(3rd),
-      :fourth => %w(4th),
-      :fifth => %w(5th),
-      :sixth => %w(6th),
-      :seventh => %w(7th),
-      :eighth => %w(8th),
-      :ninth => %w(9th),
-      :tenth => %w(10th),
-      :eleventh => %w(11th),
-      :twelveth => %w(12th),
-      :thitneeth => %w(13th),
-      :fourteenth => %w(14th),
-      :fifteenth => %w(15th),
-      :sixteenth => %w(16th),
-      :seventeenth => %w(17th),
-      :eighteenth => %w(18th),
-      :nineteenth => %w(19th),
-      :twentieth => %w(20th),
-    }
     SUPPORTED_FORMS = [:long, :short]
   end
 end

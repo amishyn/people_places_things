@@ -203,4 +203,8 @@ describe StreetAddress do
   it 'should process ordinal numbers' do
     StreetAddress.new('747 20th st.').to_s.should == "747 twentieth street"
   end
+
+  it 'should process ordinal numbers' do
+    StreetAddress.new('747 123rd st.').to_s.should == "747 one hundred and twenty-third street"
+  end
 end
