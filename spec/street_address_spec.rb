@@ -197,7 +197,9 @@ describe StreetAddress do
   end
   
   it 'should process ordinal numbers' do
-    StreetAddress.new('747 3rd st.').to_s.should == "747 third street"
+    s = StreetAddress.new('747 3rd st.')
+    s.to_s.should == "747 third street"
+    s.name.should == "third"
   end
 
   it 'should process ordinal numbers' do
@@ -207,4 +209,6 @@ describe StreetAddress do
   it 'should process ordinal numbers' do
     StreetAddress.new('747 123rd st.').to_s.should == "747 one hundred and twenty-third street"
   end
+
+  
 end
